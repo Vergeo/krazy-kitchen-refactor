@@ -3,50 +3,41 @@ package restaurant;
 import java.util.ArrayList;
 
 public class Food {
-	
-	private String name;
-	private String recipeString;
-	private ArrayList<String> ingredients;
-	private ArrayList<Integer> quantity;
-	
-	public Food(String name, String recipeString, ArrayList<String> ingredients, ArrayList<Integer> quantity) {
-		super();
-		this.name = name;
-		this.recipeString = recipeString;
-		this.ingredients = ingredients;
-		this.quantity = quantity;
-	}
 
-	public String getName() {
-		return name;
-	}
+    private String name;
+    private String recipeString;
+    // CHANGED (B-01): two parallel lists replaced by a single list of Ingredient objects
+    private ArrayList<Ingredient> ingredients;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public Food(String name, String recipeString, ArrayList<Ingredient> ingredients) {
+        super();
+        this.name = name;
+        this.recipeString = recipeString;
+        this.ingredients = ingredients;
+    }
 
-	public String getRecipeString() {
-		return recipeString;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setRecipeString(String recipeString) {
-		this.recipeString = recipeString;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public ArrayList<String> getIngredients() {
-		return ingredients;
-	}
+    public String getRecipeString() {
+        return recipeString;
+    }
 
-	public void setIngredients(ArrayList<String> ingredients) {
-		this.ingredients = ingredients;
-	}
+    public void setRecipeString(String recipeString) {
+        this.recipeString = recipeString;
+    }
 
-	public ArrayList<Integer> getQuantity() {
-		return quantity;
-	}
+    public ArrayList<Ingredient> getIngredients() {
+        return ingredients;
+    }
 
-	public void setQuantity(ArrayList<Integer> quantity) {
-		this.quantity = quantity;
-	}
-	
+    public void setIngredients(ArrayList<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
 }

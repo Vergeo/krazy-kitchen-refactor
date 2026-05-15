@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import app.KrazyKitchen;
 import inventory.Inventory;
+import restaurant.Ingredient;
 import restaurant.Order;
 import restaurant.OrderList;
 import utilities.Color;
@@ -72,14 +73,15 @@ public class Input {
 						order.getCustomer().getPatience() - 1 <= curLimit &&
 						curLimit <= order.getCustomer().getPatience()) {
 					inventory.setInventoryFromFile();
-					for (int i = 0; i < order.getFood().getIngredients().size(); i++) {
-						if (!inventory.ifIngredientExist(order.getFood().getIngredients().get(i), order.getFood().getQuantity().get(i))) {
+					for (Ingredient ing : order.getFood().getIngredients()) {
+						if (!inventory.ifIngredientExist(ing.getName(), ing.getQuantity())) {
 							loop("Not enough ingredients!");
 							return;
 						}
 					}
-					for (int i = 0; i < order.getFood().getIngredients().size(); i++) {
-						inventory.useIngredient(order.getFood().getIngredients().get(i), order.getFood().getQuantity().get(i));
+					// CHANGED (B-01): iterate Ingredient objects directly instead of syncing two lists by index
+					for (Ingredient ing : order.getFood().getIngredients()) {
+							inventory.useIngredient(ing.getName(), ing.getQuantity());
 					}
 					newOrderList.getOrderList().remove(order);
 					newOrderList.saveOrderListToFile();

@@ -1,5 +1,4 @@
 package restaurant;
-
 import customer.Customer;
 import customer.VIPCustomer;
 
@@ -29,16 +28,17 @@ public class Order {
 		this.food = food;
 	}
 	
-	public int getTotalReward() {
-		int totalIngredient = 0;
-		for (int qty : this.food.getQuantity()) {
-			totalIngredient += qty;
-		}
-		int baseReward = 5 + totalIngredient*2;
-		if (customer instanceof VIPCustomer) {
-			VIPCustomer vip = (VIPCustomer) customer;
-			return baseReward + vip.getBonusReward();
-		} else return baseReward;
-	}
+public int getTotalReward() {
+    int totalIngredient = 0;
+    // CHANGED (B-01): iterate Ingredient objects directly, quantity is inside each one
+    for (Ingredient ing : this.food.getIngredients()) {
+        totalIngredient += ing.getQuantity();
+    }
+    int baseReward = 5 + totalIngredient * 2;
+    if (customer instanceof VIPCustomer) {
+        VIPCustomer vip = (VIPCustomer) customer;
+        return baseReward + vip.getBonusReward();
+    } else return baseReward;
+}
 
 }

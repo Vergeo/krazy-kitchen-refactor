@@ -18,29 +18,49 @@ public class FoodList {
 		Food cheeseBurger = new Food(
 				"Cheese Burger",
 				"Bun, Cheese, Patty, Bun",
-				new ArrayList<String>(Arrays.asList("Bun", "Cheese", "Patty")),
-				new ArrayList<Integer>(Arrays.asList(2, 1, 1)));
+    new ArrayList<Ingredient>(Arrays.asList(
+        new Ingredient("Bun", 2),
+        new Ingredient("Cheese", 1),
+        new Ingredient("Patty", 1)
+    )));
 		foodList.add(cheeseBurger);
 		
 		Food baconBurger = new Food(
 				"Bacon Burger",
 				"Bun, Bacon, Patty, Lettucee, Tomato, Bun",
-				new ArrayList<String>(Arrays.asList("Bun", "Bacon", "Patty", "Lettuce", "Tomato")),
-				new ArrayList<Integer>(Arrays.asList(2, 1, 1, 1, 1)));
+    new ArrayList<Ingredient>(Arrays.asList(
+        new Ingredient("Bun", 2),
+        new Ingredient("Bacon", 1),
+        new Ingredient("Patty", 1),
+        new Ingredient("Lettuce", 1),
+        new Ingredient("Tomato", 1)
+    )));
 		foodList.add(baconBurger);
 		
 		Food veggieBurger = new Food(
 				"Veggie Burger",
 				"Bun, Lettuce, Tomato, Onions, Pickels, Bun",
-				new ArrayList<String>(Arrays.asList("Bun", "Lettuce", "Tomato", "Onions", "Pickels")),
-				new ArrayList<Integer>(Arrays.asList(2, 1, 1, 1, 1)));
+    new ArrayList<Ingredient>(Arrays.asList(
+        new Ingredient("Bun", 2),
+        new Ingredient("Lettuce", 1),
+        new Ingredient("Tomato", 1),
+        new Ingredient("Onions", 1),
+        new Ingredient("Pickles", 1)
+    )));
 		foodList.add(veggieBurger);
 		
 		Food deluxeBurger = new Food(
 				"Deluxe Burger",
 				"Bun, Cheese, Bacon, Patty, Lettuce, Tomato, Onions, Bun",
-				new ArrayList<String>(Arrays.asList("Bun", "Cheese", "Bacon", "Patty", "Lettuce", "Tomato", "Onions")),
-				new ArrayList<Integer>(Arrays.asList(2, 1, 1, 1, 1, 1, 1)));
+    new ArrayList<Ingredient>(Arrays.asList(
+        new Ingredient("Bun", 2),
+        new Ingredient("Cheese", 1),
+        new Ingredient("Bacon", 1),
+        new Ingredient("Patty", 1),
+        new Ingredient("Lettuce", 1),
+        new Ingredient("Tomato", 1),
+        new Ingredient("Onions", 1)
+    )));
 		foodList.add(deluxeBurger);
 	}
 	
