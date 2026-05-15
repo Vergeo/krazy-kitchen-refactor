@@ -1,7 +1,5 @@
 package mode;
 
-import java.util.ArrayList;
-
 import app.KrazyKitchen;
 import inventory.Inventory;
 import restaurant.Ingredient;
@@ -9,10 +7,15 @@ import restaurant.Order;
 import restaurant.OrderList;
 import utilities.Color;
 import utilities.IO;
+import utilities.ScoreRepository;
 
 public class Input {
 
+    // (B-04) CHANGED: delegates score file operations to ScoreRepository
+    private ScoreRepository scoreRepository;
+
     public Input() {
+        scoreRepository = new ScoreRepository();
         IO.cls();
         loop("");
     }
@@ -39,14 +42,12 @@ public class Input {
         orderList.setOrderListFromFile();
         idx--;
 
-        // (B-03) EXTRACTED: index boundary check pulled into its own method
         if (!validateOrderIndex(idx, orderList)) return;
 
         Order processedOrder = orderList.getOrderList().get(idx);
         long timeLimit = processedOrder.getCustomer().getPatience() * 1000;
         long startProcessTime = System.currentTimeMillis();
 
-        // (B-03) EXTRACTED: player input + recipe check pulled into its own method
         if (!getPlayerRecipeInput(processedOrder)) return;
 
         long timeElapse = System.currentTimeMillis() - startProcessTime;
@@ -61,9 +62,7 @@ public class Input {
         int curLimit = (int) ((timeLimit - timeElapse) / 1000);
 
         for (Order order : newOrderList.getOrderList()) {
-            // (B-03) EXTRACTED: order matching logic pulled into its own method
             if (matchesCurrentOrder(order, processedOrder, curLimit)) {
-                // (B-03) EXTRACTED: inventory use + score update pulled into its own method
                 completeOrder(order, newOrderList);
                 return;
             }
@@ -72,7 +71,6 @@ public class Input {
         loop("This order is removed or expired!");
     }
 
-    // (B-03) EXTRACTED from processOrder, validates the order index is within bounds
     private boolean validateOrderIndex(int idx, OrderList orderList) {
         if (idx < 0 || idx > orderList.getOrderList().size()) {
             loop("Invalid Order!");
@@ -81,7 +79,6 @@ public class Input {
         return true;
     }
 
-    // (B-03) EXTRACTED from processOrder, shows recipe prompt, reads player input, checks match
     private boolean getPlayerRecipeInput(Order processedOrder) {
         System.out.println("");
         System.out.println(Color.id(40) + "Processing " + processedOrder.getCustomer().getName() + "'s order");
@@ -95,7 +92,6 @@ public class Input {
         return true;
     }
 
-    // (B-03) EXTRACTED from processOrder, checks if an order from the refreshed list matches what the player selected
     private boolean matchesCurrentOrder(Order order, Order processedOrder, int curLimit) {
         return order.getCustomer().getName().equals(processedOrder.getCustomer().getName()) &&
                order.getFood().getName().equals(processedOrder.getFood().getName()) &&
@@ -103,7 +99,6 @@ public class Input {
                curLimit <= order.getCustomer().getPatience();
     }
 
-    // (B-03) EXTRACTED from processOrder, checks inventory, deducts ingredients, updates score file
     private void completeOrder(Order order, OrderList newOrderList) {
         Inventory inventory = new Inventory();
         inventory.setInventoryFromFile();
@@ -124,25 +119,19 @@ public class Input {
 
         System.out.println(Color.id(40) + "Order completed! You earned $" + order.getTotalReward());
 
-        ArrayList<String> data = IO.readFile("score.txt");
-        int money = Integer.parseInt(data.get(0));
-        money += order.getTotalReward();
-        data.clear();
-        data.add(Integer.toString(money));
-        IO.writeFile("score.txt", data);
+        // (B-04) CHANGED: delegates score update to ScoreRepository
+        scoreRepository.addScore(order.getTotalReward());
 
         loop("");
     }
 
     public void restockInventory() {
-        ArrayList<String> data = IO.readFile("score.txt");
-        int money = Integer.parseInt(data.get(0));
+        int money = scoreRepository.readScore();
         if (money >= 30) {
             Inventory inventory = new Inventory();
             inventory.restockInventory();
-            data.clear();
-            data.add(Integer.toString(money - 30));
-            IO.writeFile("score.txt", data);
+            // CHANGED: delegates score update to ScoreRepository
+            scoreRepository.subtractScore(30);
             System.out.println(Color.id(40) + "Restock Successful (- $30)");
             loop("");
         } else {
