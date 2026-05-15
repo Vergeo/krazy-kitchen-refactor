@@ -1,2 +1,2 @@
-1#Frank#Veggie Burger#17#23
-2#Bob VIP#Deluxe Burger#31#29
+1#Eve#Veggie Burger#17#22
+2#Hank#Cheese Burger#13#23

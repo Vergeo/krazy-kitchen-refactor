@@ -4,6 +4,7 @@ krazy-kitchen-refactor
 ├─ .project
 ├─ bin
 │  ├─ app
+│  │  ├─ app
 │  │  └─ KrazyKitchen.class
 │  ├─ customer
 │  │  ├─ CasualCustomer.class
@@ -20,19 +21,21 @@ krazy-kitchen-refactor
 │  ├─ restaurant
 │  │  ├─ Food.class
 │  │  ├─ FoodList.class
-│  │  ├─ Ingredient.Java
+│  │  ├─ Ingredient.class
 │  │  ├─ Order.class
 │  │  └─ OrderList.class
 │  └─ utilities
 │     ├─ Color.class
 │     ├─ IO.class
-│     └─ Table.class
+│     ├─ Table.class
+│     └─ TableColumn.class
 ├─ inventory.txt
 ├─ README.md
 ├─ restaurant.txt
 ├─ score.txt
 └─ src
    ├─ app
+   │  ├─ app
    │  └─ KrazyKitchen.java
    ├─ customer
    │  ├─ CasualCustomer.java
@@ -49,11 +52,12 @@ krazy-kitchen-refactor
    ├─ restaurant
    │  ├─ Food.java
    │  ├─ FoodList.java
+   │  ├─ Ingredient.java
    │  ├─ Order.java
    │  └─ OrderList.java
    └─ utilities
       ├─ Color.java
       ├─ IO.java
-      └─ Table.java
-
+      ├─ Table.java
+      └─ TableColumn.java
 ```
