@@ -130,7 +130,7 @@ public class Input {
         if (money >= 30) {
             Inventory inventory = new Inventory();
             inventory.restockInventory();
-            // CHANGED: delegates score update to ScoreRepository
+            // (B-04) CHANGED: delegates score update to ScoreRepository
             scoreRepository.subtractScore(30);
             System.out.println(Color.id(40) + "Restock Successful (- $30)");
             loop("");

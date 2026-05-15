@@ -1,8 +1,8 @@
-Lettuce#18
+Lettuce#19
 Onions#19
 Bun#16
-Cheese#20
-Tomato#18
-Bacon#19
+Cheese#19
+Tomato#19
+Bacon#20
 Patty#19
 Pickles#19

@@ -9,6 +9,7 @@ import inventory.Inventory;
 import restaurant.OrderList;
 import utilities.Color;
 import utilities.IO;
+import utilities.ScoreRepository;
 import utilities.Table;
 import utilities.TableColumn;
 
@@ -65,8 +66,8 @@ public class Output {
 	
 	public void quit() {
 		IO.cls();
-		ArrayList<String> data = IO.readFile("score.txt");
-		int score = Integer.parseInt(data.get(0));
+		ScoreRepository scoreRepository = new ScoreRepository();
+		int score = scoreRepository.readScore();
 		Table.displayTable("Result", new ArrayList<TableColumn>(Arrays.asList(
     new TableColumn("Your Final Score: " + score, 46)
 		)), null);
@@ -90,8 +91,8 @@ public class Output {
 	}
 	
 	public void displayGameStats() {
-		ArrayList<String> data = IO.readFile("score.txt");
-		int score = Integer.parseInt(data.get(0));
+		ScoreRepository scoreRepository = new ScoreRepository();
+		int score = scoreRepository.readScore();
 		Table.displayTable("Game Stats", new ArrayList<TableColumn>(Arrays.asList(
     new TableColumn("Current Score: $" + score, 46)
 		)), null);
