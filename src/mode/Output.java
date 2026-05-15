@@ -10,6 +10,7 @@ import restaurant.OrderList;
 import utilities.Color;
 import utilities.IO;
 import utilities.Table;
+import utilities.TableColumn;
 
 public class Output {
 	
@@ -66,7 +67,9 @@ public class Output {
 		IO.cls();
 		ArrayList<String> data = IO.readFile("score.txt");
 		int score = Integer.parseInt(data.get(0));
-		Table.displayTable("Result", new ArrayList<String>(Arrays.asList("Your Final Score: " + score)), new ArrayList<Integer> (Arrays.asList(46)), null);
+		Table.displayTable("Result", new ArrayList<TableColumn>(Arrays.asList(
+    new TableColumn("Your Final Score: " + score, 46)
+		)), null);
 		IO.enter();
 	}
 	
@@ -81,13 +84,17 @@ public class Output {
 		System.out.println();
 		displayGameStats();
 		System.out.println();
-		Table.displayTable("", new ArrayList<String>(Arrays.asList("Select an order to process or press enter to return to menu")), new ArrayList<Integer> (Arrays.asList(60)), null);
+		Table.displayTable("", new ArrayList<TableColumn>(Arrays.asList(
+    new TableColumn("Select an order to process or press enter to return to menu", 60)
+		)), null);
 	}
 	
 	public void displayGameStats() {
 		ArrayList<String> data = IO.readFile("score.txt");
 		int score = Integer.parseInt(data.get(0));
-		Table.displayTable("Game Stats", new ArrayList<String>(Arrays.asList("Current Score: $" + score)), new ArrayList<Integer> (Arrays.asList(46)), null);
+		Table.displayTable("Game Stats", new ArrayList<TableColumn>(Arrays.asList(
+    new TableColumn("Current Score: $" + score, 46)
+		)), null);
 	}
 
 }

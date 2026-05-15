@@ -8,6 +8,7 @@ import customer.Customer;
 import customer.VIPCustomer;
 import utilities.IO;
 import utilities.Table;
+import utilities.TableColumn;
 
 public class OrderList {
 	
@@ -88,7 +89,13 @@ public class OrderList {
 			datas.add(data);
 			number++;
 		}
-		Table.displayTable("", new ArrayList<String>(Arrays.asList("No.", "Customer", "Order", "Reward", "Time")), new ArrayList<Integer> (Arrays.asList(5, 15, 20, 6, 5)), datas);
+			Table.displayTable("", new ArrayList<TableColumn>(Arrays.asList(
+			new TableColumn("No.", 5),
+			new TableColumn("Customer", 15),
+			new TableColumn("Order", 20),
+			new TableColumn("Reward", 6),
+			new TableColumn("Time", 5)
+	)), datas);
 	}
 
 }

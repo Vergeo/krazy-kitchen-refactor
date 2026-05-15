@@ -6,6 +6,7 @@ import java.util.Arrays;
 import restaurant.Ingredient;
 import utilities.IO;
 import utilities.Table;
+import utilities.TableColumn;
 
 public class Inventory {
 
@@ -77,12 +78,10 @@ public class Inventory {
             row.add(Integer.toString(ing.getQuantity()));
             datas.add(row);
         }
-        Table.displayTable(
-            "",
-            new ArrayList<String>(Arrays.asList("Ingredient", "Quantity")),
-            new ArrayList<Integer>(Arrays.asList(15, 10)),
-            datas
-        );
+			Table.displayTable("", new ArrayList<TableColumn>(Arrays.asList(
+					new TableColumn("Ingredient", 15),
+					new TableColumn("Quantity", 10)
+			)), datas);
     }
 
     public void restockInventory() {
