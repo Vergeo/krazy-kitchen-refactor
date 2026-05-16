@@ -1,6 +1,5 @@
 package mode;
 
-import app.KrazyKitchen;
 import inventory.Inventory;
 import restaurant.Ingredient;
 import restaurant.Order;
@@ -9,19 +8,32 @@ import utilities.Color;
 import utilities.IO;
 import utilities.ScoreRepository;
 
-public class Input {
+// (O-03) CHANGED: Input now extends Mode and conforms to the shared interface.
+public class Input extends Mode {
 
     // (B-04) CHANGED: delegates score file operations to ScoreRepository
     private ScoreRepository scoreRepository;
 
+    // (O-03) CHANGED: store the latest error message as a field so the public
+    // loop() signature matches the Mode contract. Previously loop took a
+    // String err parameter, which broke uniformity with Output.loop().
+    private String pendingError;
+
     public Input() {
         scoreRepository = new ScoreRepository();
+        pendingError = "";
         IO.cls();
-        loop("");
+        loop();
     }
 
-    public void loop(String err) {
-        if (!err.isEmpty()) System.out.println(Color.id(1) + "Error: " + err);
+    // (O-03) CHANGED: overrides Mode.loop() with a no-arg signature.
+    // Error state is read from the pendingError field, set by callers via
+    // loopWithError() when they need to redisplay the prompt with a message.
+    @Override
+    public void loop() {
+        printError(pendingError);
+        pendingError = "";
+
         System.out.println(Color.id(250) + "Enter command (e.g., 'process 1' to process order 1, 'restock' to restock inventory, 'exit' to quit): ");
         System.out.print(Color.id(255) + ">> " + Color.id(226));
         String in = IO.scan.nextLine();
@@ -29,12 +41,19 @@ public class Input {
         try {
             if (token[0].equals("process")) processOrder(Integer.parseInt(token[1]));
             else if (in.equals("restock")) restockInventory();
-            else if (in.equals("exit")) exit();
-            else loop("Invalid Process!");
+            else if (in.equals("exit")) returnToMenu();
+            else loopWithError("Invalid Process!");
         } catch (Exception e) {
-            loop("Invalid Process!");
+            loopWithError("Invalid Process!");
             return;
         }
+    }
+
+    // (O-03) NEW: internal helper that preserves the original "loop with an
+    // error message" behavior without polluting the public Mode interface.
+    private void loopWithError(String err) {
+        this.pendingError = err;
+        loop();
     }
 
     public void processOrder(int idx) {
@@ -53,7 +72,7 @@ public class Input {
         long timeElapse = System.currentTimeMillis() - startProcessTime;
 
         if (timeElapse - 1 > timeLimit) {
-            loop("This order is expired!");
+            loopWithError("This order is expired!");
             return;
         }
 
@@ -68,12 +87,12 @@ public class Input {
             }
         }
 
-        loop("This order is removed or expired!");
+        loopWithError("This order is removed or expired!");
     }
 
     private boolean validateOrderIndex(int idx, OrderList orderList) {
         if (idx < 0 || idx > orderList.getOrderList().size()) {
-            loop("Invalid Order!");
+            loopWithError("Invalid Order!");
             return false;
         }
         return true;
@@ -86,7 +105,7 @@ public class Input {
         System.out.print(Color.id(255) + ">> " + Color.id(226));
         String in = IO.scan.nextLine();
         if (!processedOrder.getFood().getRecipeString().equals(in)) {
-            loop("Ingrident do not matched!");
+            loopWithError("Ingrident do not matched!");
             return false;
         }
         return true;
@@ -105,7 +124,7 @@ public class Input {
 
         for (Ingredient ing : order.getFood().getIngredients()) {
             if (!inventory.ifIngredientExist(ing.getName(), ing.getQuantity())) {
-                loop("Not enough ingredients!");
+                loopWithError("Not enough ingredients!");
                 return;
             }
         }
@@ -122,7 +141,7 @@ public class Input {
         // (B-04) CHANGED: delegates score update to ScoreRepository
         scoreRepository.addScore(order.getTotalReward());
 
-        loop("");
+        loop();
     }
 
     public void restockInventory() {
@@ -133,14 +152,13 @@ public class Input {
             // (B-04) CHANGED: delegates score update to ScoreRepository
             scoreRepository.subtractScore(30);
             System.out.println(Color.id(40) + "Restock Successful (- $30)");
-            loop("");
+            loop();
         } else {
-            loop("Not Enough Money!");
+            loopWithError("Not Enough Money!");
         }
     }
 
-    public void exit() {
-        new KrazyKitchen();
-    }
+    // (O-03) REMOVED: exit() was renamed and pulled up to Mode.returnToMenu().
+    // The old "exit" command in loop() now calls returnToMenu() directly.
 
 }

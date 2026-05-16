@@ -38,4 +38,5 @@ public abstract class Customer {
 		this.patience--;
 	}
 	
+	public int getBonusReward() { return 0; }
 }

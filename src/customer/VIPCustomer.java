@@ -15,12 +15,11 @@ public class VIPCustomer extends Customer{
 		this.bonusReward = bonusReward;
 	}
 
-	public int getBonusReward() {
-		return bonusReward;
-	}
-
 	public void setBonusReward(int bonusReward) {
 		this.bonusReward = bonusReward;
 	}
+
+	@Override
+	public int getBonusReward() { return this.bonusReward; }
 
 }

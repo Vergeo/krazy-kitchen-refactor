@@ -1,6 +1,5 @@
 package restaurant;
 import customer.Customer;
-import customer.VIPCustomer;
 
 public class Order {
 	
@@ -34,11 +33,7 @@ public int getTotalReward() {
     for (Ingredient ing : this.food.getIngredients()) {
         totalIngredient += ing.getQuantity();
     }
-    int baseReward = 5 + totalIngredient * 2;
-    if (customer instanceof VIPCustomer) {
-        VIPCustomer vip = (VIPCustomer) customer;
-        return baseReward + vip.getBonusReward();
-    } else return baseReward;
+    return 5 + totalIngredient * 2 + customer.getBonusReward(); // CHANGED (O-01): remove instance of
 }
 
 }
