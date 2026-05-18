@@ -3,6 +3,7 @@ package inventory;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import restaurant.Food;
 import restaurant.Ingredient;
 import utilities.IO;
 import utilities.Table;
@@ -67,6 +68,21 @@ public class Inventory {
             }
         }
         saveInventoryToFile();
+    }
+
+    //NEW (C-02): extracted validation for stock Ingredient
+    public boolean consumeIngredientsFor(Food food) {
+        for (Ingredient ing : food.getIngredients()) {
+            if (!ifIngredientExist(ing.getName(), ing.getQuantity())) {
+                return false;
+            }
+        }
+
+        for (Ingredient ing : food.getIngredients()) {
+            useIngredient(ing.getName(), ing.getQuantity());
+        }
+ 
+        return true;
     }
 
     public void displayInventory() {

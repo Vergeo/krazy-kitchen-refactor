@@ -1,7 +1,6 @@
 package mode;
 
 import inventory.Inventory;
-import restaurant.Ingredient;
 import restaurant.Order;
 import restaurant.OrderList;
 import utilities.Color;
@@ -112,8 +111,14 @@ public class Input extends Mode {
     }
 
     private boolean matchesCurrentOrder(Order order, Order processedOrder, int curLimit) {
-        return order.getCustomer().getName().equals(processedOrder.getCustomer().getName()) &&
-               order.getFood().getName().equals(processedOrder.getFood().getName()) &&
+        //(C-01) NEW: extract the message chain and move it into a variable
+        var customerName = order.getCustomer().getName();
+        var foodName = order.getFood().getName();
+        var processedCustomer = processedOrder.getCustomer().getName();
+        var processedFood = processedOrder.getFood().getName();
+
+        return customerName.equals(processedCustomer) &&
+               foodName.equals(processedFood) &&
                order.getCustomer().getPatience() - 1 <= curLimit &&
                curLimit <= order.getCustomer().getPatience();
     }
@@ -121,16 +126,11 @@ public class Input extends Mode {
     private void completeOrder(Order order, OrderList newOrderList) {
         Inventory inventory = new Inventory();
         inventory.setInventoryFromFile();
-
-        for (Ingredient ing : order.getFood().getIngredients()) {
-            if (!inventory.ifIngredientExist(ing.getName(), ing.getQuantity())) {
-                loopWithError("Not enough ingredients!");
-                return;
-            }
-        }
-
-        for (Ingredient ing : order.getFood().getIngredients()) {
-            inventory.useIngredient(ing.getName(), ing.getQuantity());
+        
+        //CHANGED (C-02): For loop to validate Ingredient stock is extracted and moved to Inventory. 
+        if (!inventory.consumeIngredientsFor(order.getFood())) {
+            loopWithError("Not enough ingredients!");
+            return;
         }
 
         newOrderList.getOrderList().remove(order);
