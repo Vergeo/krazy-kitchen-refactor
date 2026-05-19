@@ -81,8 +81,9 @@ public class Output extends Mode {
         IO.cls();
         ScoreRepository scoreRepository = new ScoreRepository();
         int score = scoreRepository.readScore();
+        // (TCP-02) CHANGED: uses scoreRepository.formatScore() instead of hardcoded currency symbol
         Table.displayTable("Result", new ArrayList<TableColumn>(Arrays.asList(
-            new TableColumn("Your Final Score: " + score, 46)
+            new TableColumn("Your Final Score: " + scoreRepository.formatScore(score), 46)
         )), null);
         IO.enter();
     }
@@ -106,8 +107,9 @@ public class Output extends Mode {
     public void displayGameStats() {
         ScoreRepository scoreRepository = new ScoreRepository();
         int score = scoreRepository.readScore();
+        // (TCP-02) CHANGED: uses scoreRepository.formatScore() instead of hardcoded currency symbol
         Table.displayTable("Game Stats", new ArrayList<TableColumn>(Arrays.asList(
-            new TableColumn("Current Score: $" + score, 46)
+            new TableColumn("Current Score: $" + scoreRepository.formatScore(score), 46)
         )), null);
     }
  

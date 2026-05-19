@@ -18,19 +18,23 @@ public class Inventory {
         ingredients = new ArrayList<Ingredient>();
     }
 
+    // (TCP-01) CHANGED: ingredients are now auto filled from FoodList, adding new food no longer need to modify this class
     public void setFreshInventory() {
         ingredients.clear();
         // CHANGED (B-01): each entry is now a self-contained Ingredient object
-        ingredients.addAll(Arrays.asList(
-            new Ingredient("Lettuce", 10),
-            new Ingredient("Onions",  10),
-            new Ingredient("Bun",     10),
-            new Ingredient("Cheese",  10),
-            new Ingredient("Tomato",  10),
-            new Ingredient("Bacon",   10),
-            new Ingredient("Patty",   10),
-            new Ingredient("Pickles", 10)
-        ));
+        
+
+        Set<String> seen = new HashSet<>();
+        FoodList foodList = new FoodList();
+
+        for(Food food : foodList.getAllFoods()) {
+            for(Ingredients ing : food.getIngredients()) {
+                if(!seen.contains(ing.getName())) {
+                    seen.add(ing.getName());
+                    ingredients.add(new Ingredients(ing.getName(), 10))
+                }
+            }
+        }
         saveInventoryToFile();
     }
 

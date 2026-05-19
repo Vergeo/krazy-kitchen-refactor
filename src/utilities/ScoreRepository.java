@@ -24,4 +24,9 @@ public class ScoreRepository {
         writeScore(readScore() - amount);
     }
 
+    // (TCP-02) CHANGED: Added new method to control the score format
+    public String formatScore(int score) {
+        return "$" + score;
+    }
+
 }

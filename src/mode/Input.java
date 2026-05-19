@@ -136,7 +136,8 @@ public class Input extends Mode {
         newOrderList.getOrderList().remove(order);
         newOrderList.saveOrderListToFile();
 
-        System.out.println(Color.id(40) + "Order completed! You earned $" + order.getTotalReward());
+        // (TCP-02) CHANGED: uses scoreRepository.formatScore() instead of hardcoded currency symbol
+        System.out.println(Color.id(40) + "Order completed! You earned " + scoreRepository.formatScore(order.getTotalReward()));
 
         // (B-04) CHANGED: delegates score update to ScoreRepository
         scoreRepository.addScore(order.getTotalReward());
@@ -151,7 +152,8 @@ public class Input extends Mode {
             inventory.restockInventory();
             // (B-04) CHANGED: delegates score update to ScoreRepository
             scoreRepository.subtractScore(30);
-            System.out.println(Color.id(40) + "Restock Successful (- $30)");
+            // (TCP-02) CHANGED: uses scoreRepository.formatScore() instead of hardcoded currency symbol
+            System.out.println(Color.id(40) + "Restock Successful (- " + scoreRepository.formatScore(30) + ")");
             loop();
         } else {
             loopWithError("Not Enough Money!");

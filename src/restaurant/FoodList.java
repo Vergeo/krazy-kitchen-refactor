@@ -14,10 +14,10 @@ public class FoodList {
 		fillFoodList();
 	}
 	
+	// (TCP-01) CHANGED: removed all the recipeString here cus it's called automatically
 	private void fillFoodList() {
 		Food cheeseBurger = new Food(
 				"Cheese Burger",
-				"Bun, Cheese, Patty, Bun",
     new ArrayList<Ingredient>(Arrays.asList(
         new Ingredient("Bun", 2),
         new Ingredient("Cheese", 1),
@@ -27,7 +27,6 @@ public class FoodList {
 		
 		Food baconBurger = new Food(
 				"Bacon Burger",
-				"Bun, Bacon, Patty, Lettucee, Tomato, Bun",
     new ArrayList<Ingredient>(Arrays.asList(
         new Ingredient("Bun", 2),
         new Ingredient("Bacon", 1),
@@ -39,7 +38,6 @@ public class FoodList {
 		
 		Food veggieBurger = new Food(
 				"Veggie Burger",
-				"Bun, Lettuce, Tomato, Onions, Pickels, Bun",
     new ArrayList<Ingredient>(Arrays.asList(
         new Ingredient("Bun", 2),
         new Ingredient("Lettuce", 1),
@@ -51,7 +49,6 @@ public class FoodList {
 		
 		Food deluxeBurger = new Food(
 				"Deluxe Burger",
-				"Bun, Cheese, Bacon, Patty, Lettuce, Tomato, Onions, Bun",
     new ArrayList<Ingredient>(Arrays.asList(
         new Ingredient("Bun", 2),
         new Ingredient("Cheese", 1),
@@ -75,4 +72,10 @@ public class FoodList {
 		}
 		return null;
 	}
+
+	// (TCP-01) CHANGED: Added new method to return FoodList so inventory can fill them automatically
+	public ArrayList<Food> getAllFoods() {
+		return FoodList;
+	}
+
 }
