@@ -2,8 +2,11 @@ package inventory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import restaurant.Food;
+import restaurant.FoodList;
 import restaurant.Ingredient;
 import utilities.IO;
 import utilities.Table;
@@ -31,7 +34,7 @@ public class Inventory {
             for(Ingredients ing : food.getIngredients()) {
                 if(!seen.contains(ing.getName())) {
                     seen.add(ing.getName());
-                    ingredients.add(new Ingredients(ing.getName(), 10))
+                    ingredients.add(new Ingredients(ing.getName(), 10));
                 }
             }
         }

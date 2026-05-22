@@ -75,7 +75,7 @@ public class FoodList {
 
 	// (TCP-01) CHANGED: Added new method to return FoodList so inventory can fill them automatically
 	public ArrayList<Food> getAllFoods() {
-		return FoodList;
+		return foodList;
 	}
 
 }
