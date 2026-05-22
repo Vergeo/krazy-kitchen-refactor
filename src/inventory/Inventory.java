@@ -31,10 +31,10 @@ public class Inventory {
         FoodList foodList = new FoodList();
 
         for(Food food : foodList.getAllFoods()) {
-            for(Ingredients ing : food.getIngredients()) {
+            for(Ingredient ing : food.getIngredients()) {
                 if(!seen.contains(ing.getName())) {
                     seen.add(ing.getName());
-                    ingredients.add(new Ingredients(ing.getName(), 10));
+                    ingredients.add(new Ingredient(ing.getName(), 10));
                 }
             }
         }
