@@ -17,6 +17,9 @@ public class Input extends Mode {
     // loop() signature matches the Mode contract. Previously loop took a
     // String err parameter, which broke uniformity with Output.loop().
     private String pendingError;
+    
+    // (D-03): EXTRACTED: single instantiation instead of multiple across methods
+    Inventory inventory = new Inventory();
 
     public Input() {
         scoreRepository = new ScoreRepository();
@@ -124,7 +127,7 @@ public class Input extends Mode {
     }
 
     private void completeOrder(Order order, OrderList newOrderList) {
-        Inventory inventory = new Inventory();
+    	// (D-03): EXTRACTED: move inventory into attribute
         inventory.setInventoryFromFile();
         
         //CHANGED (C-02): For loop to validate Ingredient stock is extracted and moved to Inventory. 
@@ -148,7 +151,7 @@ public class Input extends Mode {
     public void restockInventory() {
         int money = scoreRepository.readScore();
         if (money >= 30) {
-            Inventory inventory = new Inventory();
+        	// (D-03): EXTRACTED: move inventory into attribute
             inventory.restockInventory();
             // (B-04) CHANGED: delegates score update to ScoreRepository
             scoreRepository.subtractScore(30);
