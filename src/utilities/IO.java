@@ -62,9 +62,5 @@ public class IO {
 		return lines;
 	}
 	
-	public static boolean checkFile(String source) {
-		File file = new File(source);
-		return file.exists();
-	}
-
+	// (D-02) REMOVED: checkFile is not used at all by the program
 }

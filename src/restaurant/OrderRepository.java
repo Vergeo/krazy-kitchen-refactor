@@ -2,9 +2,8 @@ package restaurant;
 
 import java.util.ArrayList;
 
-import customer.CasualCustomer;
 import customer.Customer;
-import customer.VIPCustomer;
+import customer.CustomerType;
 import utilities.IO;
 
 // (B-04) EXTRACTED from OrderList: solely responsible for reading and writing orders to file
@@ -22,11 +21,9 @@ public class OrderRepository {
         ArrayList<String> data = IO.readFile("restaurant.txt");
         for (String line : data) {
             String[] token = line.split("#");
-            Customer customer;
-            if (token[1].endsWith("VIP"))
-                customer = new VIPCustomer(token[1], Integer.parseInt(token[4]), 10);
-            else
-                customer = new CasualCustomer(token[1], Integer.parseInt(token[4]));
+            CustomerType type = token[1].contains("VIP") ? CustomerType.VIP : CustomerType.Casual;
+            int patience = Integer.parseInt(token[4]);
+            Customer customer = new Customer(token[1], patience, type);
             Food food = foodList.getFood(token[2]);
             orders.add(new Order(customer, food));
         }

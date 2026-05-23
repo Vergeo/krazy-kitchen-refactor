@@ -109,7 +109,7 @@ public class Output extends Mode {
         int score = scoreRepository.readScore();
         // (TCP-02) CHANGED: uses scoreRepository.formatScore() instead of hardcoded currency symbol
         Table.displayTable("Game Stats", new ArrayList<TableColumn>(Arrays.asList(
-            new TableColumn("Current Score: $" + scoreRepository.formatScore(score), 46)
+            new TableColumn("Current Score: " + scoreRepository.formatScore(score), 46)
         )), null);
     }
  

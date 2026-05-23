@@ -3,6 +3,8 @@ package restaurant;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import customer.Customer;
+import customer.CustomerType;
 import utilities.Table;
 import utilities.TableColumn;
 
@@ -36,10 +38,8 @@ public class OrderList {
     }
 
     public void getNewOrder() {
-        boolean vip = utilities.IO.rand.nextBoolean();
-        customer.Customer customer;
-        if (vip) customer = new customer.VIPCustomer();
-        else customer = new customer.CasualCustomer();
+        CustomerType type = utilities.IO.rand.nextBoolean() ? CustomerType.VIP : CustomerType.Casual;
+        Customer customer = new Customer(type);
         Food food = this.foodList.getRandomFood();
         orderList.add(new Order(customer, food));
         saveOrderListToFile();

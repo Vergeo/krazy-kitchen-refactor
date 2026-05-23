@@ -2,24 +2,28 @@ package customer;
 
 import utilities.IO;
 
-public abstract class Customer {
+public class Customer {
 	
 	private String name;
 	private Integer patience;
+	// (D-01) NEW: Add CustomerType to differentiate Casual and VIP Customer
+	private CustomerType type;
 
-	public Customer(String name, Integer patience) {
+	public Customer(String name, Integer patience, CustomerType type) {
 		super();
 		this.name = name;
 		this.patience = patience;
+		this.type = type;
 	}
 	
-	public Customer() {
-		this.name = NameList.getRandomName();
+	public Customer(CustomerType type) {
 		this.patience = 1 + IO.rand.nextInt(20) + 15;
+		this.type = type;
+		this.name = NameList.getRandomName() + (this.type == CustomerType.VIP ? " VIP" : "");
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {
@@ -38,5 +42,7 @@ public abstract class Customer {
 		this.patience--;
 	}
 	
-	public int getBonusReward() { return 0; }
+	public int getBonusReward() { 
+		return (type == CustomerType.VIP) ? 10 : 0;
+	}
 }
